@@ -26,9 +26,21 @@ jobs:
       env:
         TEXINPUTS: .//latex//
       run: python compile_schedule.py
+      
+    - name: Configure git
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+    
+    - name: Commit PDF
+      run: |
+        git add events_schedule.pdf
+        git commit -m "Add compiled events schedule PDF"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Upload Schedule PDF
-      uses: actions/upload-artifact@v2
+    - name: Push changes
+      uses: ad-m/github-push-action@master
       with:
-        name: events_schedule
-        path: events_schedule.pdf
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
