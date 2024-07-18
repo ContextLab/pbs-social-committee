@@ -64,7 +64,10 @@ msg.attach(MIMEText(body, 'html'))
 
 server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
-server.login(sender_email, os.getenv('GMAIL_PASSWORD'))
+password = os.getenv('GMAIL_PASSWORD')
+if password is None:
+    raise ValueError("GMAIL_PASSWORD environment variable not set")
+server.login(sender_email, password)
 text = msg.as_string()
 server.sendmail(sender_email, admin_emails + organizer_emails, text)
 server.quit()
