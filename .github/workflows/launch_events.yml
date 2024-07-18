@@ -31,7 +31,7 @@ jobs:
       run: sudo apt-get install gh -y
 
     - name: Authenticate with GitHub CLI
-      run: gh auth login --with-token <<< "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+      run: echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" | gh auth login --with-token
 
     - name: Generate event reminder scripts
       run: python generate_event_reminders.py
@@ -50,4 +50,5 @@ jobs:
 
     - name: Push changes
       run: |
+        git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}
         git push origin HEAD:main
