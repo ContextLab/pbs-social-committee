@@ -1,6 +1,6 @@
 PBS Social Committee Calendar of Events
 
-Pumpkin Carving 🧑‍🎨🎃🎨
+Pumpkin Carving 🎃👻🧟🧚🦸
 
 Get into the Halloween spirit with our Pumpkin Carving event. All materials provided. Open to all in the PBS community.
 
