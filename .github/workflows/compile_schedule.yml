@@ -1,0 +1,53 @@
+name: Compile Schedule
+on: workflow_dispatch
+
+jobs:
+  compile_schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install pandas
+          sudo apt-get install -y pandoc
+
+      - name: Compile Schedule
+        run: |
+          import pandas as pd
+          import subprocess
+
+          # Load events
+          events_df = pd.read_csv('events.tsv', delimiter='\t')
+
+          # Generate events calendar in Markdown format
+          events_markdown = "# PBS Social Committee Calendar of Events\nWinter, 2024*\n\nAfter a brief hiatus, we’ve put together another exciting term for you! Here’s our schedule of events this term.\n\n"
+          for _, row in events_df.iterrows():
+              with open(f'templates/{row["Content File"]}', 'r') as file:
+                  event_content = file.read()
+              
+              # Replace placeholders with actual values
+              event_content = event_content.replace('{DATE}', row['Date']).replace('{TIME}', row['Time']).replace('{LOCATION}', row['Location'])
+              
+              events_markdown += f"## {row['Event Name']}\n\n"
+              events_markdown += event_content + "\n\n"
+              events_markdown += "---\n\n"
+
+          # Save the events markdown to a file
+          with open('events_schedule.md', 'w') as file:
+              file.write(events_markdown.strip())
+
+          # Convert the Markdown file to PDF using Pandoc
+          subprocess.run(['pandoc', 'events_schedule.md', '-o', 'events_schedule.pdf'])
+
+      - name: Upload Schedule PDF
+        uses: actions/upload-artifact@v2
+        with:
+          name: events_schedule_pdf
+          path: events_schedule.pdf
