@@ -1,7 +1,6 @@
 import pandas as pd
 import yaml
 from datetime import datetime, timedelta
-import os
 
 # Load TSV files
 events_df = pd.read_csv('events.tsv', delimiter='\t')
@@ -21,7 +20,10 @@ with open('templates/send_email_template.py', 'r') as file:
 # Function to create event reminder scripts
 def create_event_script(event_name, date_str, content, frequency, day_of_week, date, time, location):
     event_date = datetime.strptime(date_str, '%Y-%m-%d')
-    trigger_time = (event_date - timedelta(days=1)).strftime('%Y-%m-%dT14:00:00Z') # 9 AM ET is 14:00 UTC
+    trigger_time = event_date - timedelta(days=1)  # 1 day before the event
+
+    # Convert trigger time to cron syntax
+    cron_schedule = f"{trigger_time.minute} {trigger_time.hour} {trigger_time.day} {trigger_time.month} *"
 
     # Email content
     with open(f'templates/{content}', 'r') as file:
@@ -38,14 +40,14 @@ def create_event_script(event_name, date_str, content, frequency, day_of_week, d
     announcement_content = admin_template.replace('===BEGIN===', '===BEGIN===\n' + email_content).replace('===END===', '\n===END===')
 
     # Replace placeholders in the email script template
-    email_script = email_script_template.replace('{sender_email}', sender_email).replace('{admin_emails_str}', admin_emails_str).replace('{organizer_emails_str}', organizer_emails_str).replace('{event_name}', event_name).replace('{announcement_content}', announcement_content).replace('{password}', os.environ['GMAIL_PASSWORD'])
+    email_script = email_script_template.replace('{sender_email}', sender_email).replace('{admin_emails_str}', admin_emails_str).replace('{organizer_emails_str}', organizer_emails_str).replace('{event_name}', event_name).replace('{announcement_content}', announcement_content).replace('{password}', "${{ secrets.GMAIL_PASSWORD }}")
 
     # Create GitHub Action YAML
     action_script = {
         'name': f'Reminder for {event_name}',
         'on': {
             'schedule': [
-                {'cron': trigger_time}
+                {'cron': cron_schedule}
             ]
         },
         'jobs': {
