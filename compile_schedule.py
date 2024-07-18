@@ -2,6 +2,7 @@ import pandas as pd
 import subprocess
 import os
 from datetime import datetime
+import re
 
 # Determine the term and year
 def get_term_and_year(start_date):
@@ -16,6 +17,31 @@ def get_term_and_year(start_date):
     else:
         term = "Fall"
     return term, year
+
+# Emoji mapping
+emoji_mapping = {
+    "🍷": "wine_glass",
+    "🧀": "cheese_wedge",
+    "🚶": "walking",
+    "🌲": "evergreen_tree",
+    "🌳": "deciduous_tree",
+    "🍵": "tea",
+    "🍪": "cookie",
+    "🥯": "bagel",
+    "☕️": "coffee",
+    "🎉": "tada",
+    "🎃": "jack_o_lantern",
+    "🎲": "game_die"
+}
+
+def replace_emojis(text):
+    def replace(match):
+        emoji = match.group(0)
+        return f"\\emoji{{{emoji_mapping.get(emoji, '')}}}"
+    
+    # Use regex to find emojis
+    emoji_pattern = re.compile('|'.join(re.escape(key) for key in emoji_mapping.keys()))
+    return emoji_pattern.sub(replace, text)
 
 # Load events
 events_df = pd.read_csv('events.tsv', delimiter='\t')
@@ -45,6 +71,9 @@ for _, row in events_df.iterrows():
     event_content = event_content.replace('Time:', '\nTime:')
     event_content = event_content.replace('Location:', '\nLocation:')
     
+    # Replace emojis
+    event_content = replace_emojis(event_content)
+    
     events_markdown += f"## {row['Event Name']}\n\n"
     events_markdown += event_content + "\n\n"
     events_markdown += "---\n\n"
@@ -57,8 +86,7 @@ with open('events_schedule.md', 'w') as file:
 subprocess.run([
     'pandoc', 'events_schedule.md', '-o', 'events_schedule.pdf', 
     '--pdf-engine=xelatex', 
-    '--variable', 'mainfont=Poppins', 
+    '--include-in-header=latex_header.tex', 
     '--variable', 'geometry:margin=1in',
-    '--variable', 'fontsize=12pt',
-    '--variable', 'mainfontoptions:BoldFont=fonts/Poppins-Bold.ttf,ItalicFont=fonts/Poppins-Italic.ttf,BoldItalicFont=fonts/Poppins-BoldItalic.ttf'
+    '--variable', 'fontsize=12pt'
 ])
