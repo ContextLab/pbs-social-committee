@@ -75,7 +75,7 @@ for _, row in events_df.iterrows():
     event_content = event_content = remove_first_and_last_lines(event_content, 2, 2)
 
     # Replace placeholders with actual values
-    event_content = ''.join(event_content).replace('{DATE}', row['Date']).replace('{TIME}', row['Time']).replace('{LOCATION}', row['Location'])
+    event_content = ''.join(event_content).replace('{DATE}', row['Date']).replace('{TIME}', row['Time']).replace('{LOCATION}', row['Location'] + '\n\n')
     
     # Adjust formatting for Date, Time, Location
     event_content = event_content.replace('**Date:**', '\n**Date:**')
