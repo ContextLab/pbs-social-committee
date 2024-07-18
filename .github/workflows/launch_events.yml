@@ -11,7 +11,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        persist-credentials: false
+        persist-credentials: true
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -28,17 +28,15 @@ jobs:
       env:
         GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
 
-    - name: Configure git
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
     - name: Commit new workflows
-      uses: stefanzweifel/git-auto-commit-action@v4
+      run: |
+        git add .github/workflows/reminder_*.yml
+        git commit -m "Add event reminder workflows"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Push changes
+      uses: ad-m/github-push-action@v0.6.0
       with:
-        commit_message: "Add event reminder workflows"
-        file_pattern: ".github/workflows/reminder_*.yml"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: main
-        commit_options: "--allow-empty"
-        commit_user_name: github-actions[bot]
-        commit_user_email: github-actions[bot]@users.noreply.github.com
