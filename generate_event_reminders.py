@@ -48,7 +48,8 @@ def create_event_script(event_name, date_str, content, frequency, day_of_week, d
         'on': {
             'schedule': [
                 {'cron': cron_schedule}
-            ]
+            ],
+            'workflow_dispatch': {}
         },
         'jobs': {
             'send_email': {
