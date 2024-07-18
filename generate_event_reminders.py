@@ -5,7 +5,7 @@ import os
 import markdown
 
 # Load events.csv and email_addresses.csv
-events_df = pd.read_csv('events.csv')
+events_df = pd.read_csv('events.tsv', delimiter='\t')
 emails_df = pd.read_csv('email_addresses.csv')
 
 # Extract email addresses
