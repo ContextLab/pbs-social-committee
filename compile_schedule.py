@@ -68,7 +68,7 @@ for _, row in events_df.iterrows():
     
     # Remove the first and last lines (last two lines specifically)
     event_content_lines = event_content.split('\n')
-    event_content = '\n'.join(event_content_lines[1:-2]).strip()
+    event_content = '\n'.join(event_content_lines[1:-3]).strip()
     
     # Adjust formatting for Date, Time, Location
     event_content = event_content.replace('**Date:**', '\n**Date:**')
