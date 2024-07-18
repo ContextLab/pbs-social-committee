@@ -44,13 +44,10 @@ jobs:
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-    - name: Fetch latest changes
-      run: git pull origin main
-
-    - name: Commit new workflows
+    - name: Commit new workflows and scripts
       run: |
-        git add .github/workflows/reminder_*.yml
-        git commit -m "Add event reminder workflows"
+        git add .github/workflows/reminder_*.yml scripts/send_email_*.py
+        git commit -m "Add event reminder workflows and scripts"
 
     - name: Push changes
       run: |
