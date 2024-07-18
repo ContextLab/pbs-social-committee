@@ -28,20 +28,14 @@ jobs:
       env:
         GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
 
-    - name: Configure git
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
     - name: Commit new workflows
-      run: |
-        git add .github/workflows/reminder_*.yml
-        git commit -m "Add event reminder workflows"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Push changes
-      uses: ad-m/github-push-action@v0.6
+      uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        commit_message: "Add event reminder workflows"
+        file_pattern: ".github/workflows/reminder_*.yml"
         branch: main
+        commit_user_name: github-actions[bot]
+        commit_user_email: github-actions[bot]@users.noreply.github.com
+        commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+        repository: ${{ github.repository }}
+        token: ${{ secrets.GITHUB_TOKEN }}
