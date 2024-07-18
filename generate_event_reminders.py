@@ -60,7 +60,7 @@ msg['To'] = receiver_email
 msg['Cc'] = cc_email
 msg['Subject'] = subject
 
-body = """\"{announcement_content_html}"""\".strip()
+body = \"\"\"{announcement_content_html}\"\"\"
 msg.attach(MIMEText(body, 'html'))
 
 server = smtplib.SMTP('smtp.gmail.com', 587)
