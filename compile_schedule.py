@@ -37,7 +37,8 @@ def get_term_and_year(start_date):
 def replace_emojis(text):
     def replace(match):
         emoji = match.group(0)
-        return f"\\emoji{{{emoji_mapping.get(emoji, '')}}}"
+        latex_name = emoji_mapping.get(emoji, '')
+        return f"\\emoji{{{latex_name}}}" if latex_name else emoji
     
     # Use regex to find emojis
     emoji_pattern = re.compile('|'.join(re.escape(key) for key in emoji_mapping.keys()))
