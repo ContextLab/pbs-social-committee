@@ -1,0 +1,36 @@
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Install dependencies
+      run: pip install smtplib email
+    - name: Send email
+      run: "python - <<EOF\nimport smtplib\nfrom email.mime.multipart import MIMEMultipart\n\
+        from email.mime.text import MIMEText\n\nsender_email = \"jeremy.manning@gmail.com\"\
+        \nreceiver_email = \"jeremy.manning+admin@gmail.com\"\ncc_email = \"jeremy@dartmouth.edu,\
+        \ jeremy.r.manning@dartmouth.edu\"\nsubject = \"Research Extravaganza Reminder\"\
+        \n\nmsg = MIMEMultipart()\nmsg['From'] = sender_email\nmsg['To'] = receiver_email\n\
+        msg['Cc'] = cc_email\nmsg['Subject'] = subject\n\nbody = \"\"\"Hi Michelle,\n\
+        \nCould you please send out the announcement below to the department?\n\n\
+        Thanks very much!\n\nBest,\nThe PBS Social Committee\n\n===BEGIN===\nPBS Social\
+        \ Committee Calendar of Events\n\nResearch Extravaganza \U0001F9D1\u200D\U0001F52C\
+        \U0001F9D1\u200D\U0001F3EB\U0001F9E0\U0001F52C\U0001F973\n\nJoin us for the\
+        \ Research Extravaganza, an exciting kickoff to the term! Meet new folks,\
+        \ welcome back returning members, and enjoy introductions from the community.\n\
+        \n**Date:** Friday, September 20\n**Time:** TBD\n**Location:** TBD\n\nWe look\
+        \ forward to seeing you there!\n\nBest,\nThe PBS Social Committee\n\n\n===END===\n\
+        \"\"\"\nmsg.attach(MIMEText(body, 'plain'))\n\nserver = smtplib.SMTP('smtp.gmail.com',\
+        \ 587)\nserver.starttls()\nserver.login(sender_email, \"${{ secrets.GMAIL_PASSWORD\
+        \ }}\")\ntext = msg.as_string()\nserver.sendmail(sender_email, receiver_email.split(\"\
+        , \") + cc_email.split(\", \"), text)\nserver.quit()\n\nEOF"
+name: Reminder for Research Extravaganza
+'on':
+  schedule:
+  - cron: 0 0 19 9 *
+  workflow_dispatch: {}
