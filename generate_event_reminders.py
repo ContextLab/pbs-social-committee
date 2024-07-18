@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import yaml
 from datetime import datetime, timedelta
+import markdown
 
 # Create the scripts directory if it doesn't exist
 if not os.path.exists('scripts'):
@@ -30,6 +31,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import markdown
+import os
 
 # Load email addresses
 emails_df = pd.read_csv('email_addresses.csv')
@@ -67,7 +69,7 @@ msg.attach(MIMEText(body, 'html'))
 # Send email
 server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
-server.login(sender_email, "${{ secrets.GMAIL_PASSWORD }}")
+server.login(sender_email, os.getenv("GMAIL_PASSWORD"))
 text = msg.as_string()
 server.sendmail(sender_email, admin_emails + organizer_emails, text)
 server.quit()
@@ -92,7 +94,7 @@ server.quit()
                     {'name': 'Checkout repository', 'uses': 'actions/checkout@v2'},
                     {'name': 'Set up Python', 'uses': 'actions/setup-python@v2', 'with': {'python-version': '3.x'}},
                     {'name': 'Install dependencies', 'run': 'pip install pandas markdown'},
-                    {'name': 'Run email script', 'run': f'python scripts/send_email_{event_name.replace(" ", "_")}.py'}
+                    {'name': 'Run email script', 'run': f'python scripts/send_email_{event_name.replace(" ", "_")}.py', 'env': {'GMAIL_PASSWORD': "${{ secrets.GMAIL_PASSWORD }}"}}
                 ]
             }
         }
