@@ -27,5 +27,5 @@ for _, row in events_df.iterrows():
 with open('events_schedule.md', 'w') as file:
     file.write(events_markdown.strip())
 
-# Convert the Markdown file to PDF using Pandoc
-subprocess.run(['pandoc', 'events_schedule.md', '-o', 'events_schedule.pdf'])
+# Convert the Markdown file to PDF using Pandoc with XeLaTeX
+subprocess.run(['pandoc', 'events_schedule.md', '-o', 'events_schedule.pdf', '--pdf-engine=xelatex'])
