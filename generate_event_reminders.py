@@ -54,14 +54,16 @@ content_file = event['Content File']
 with open(f'templates/{{content_file}}', 'r') as file:
     email_content = file.read()
 email_content = email_content.replace('{{DATE}}', date + '\\n').replace('{{TIME}}', time + '\\n').replace('{{LOCATION}}', location)
-email_content_html = markdown.markdown(email_content)
 
 # Read admin.md template
 with open('templates/admin.md', 'r') as file:
     admin_template = file.read()
 
 # Insert event content into admin template
-announcement_content_html = admin_template.replace('===BEGIN===', '===BEGIN===\\n' + email_content_html).replace('===END===', '\\n===END===')
+announcement_content = admin_template.replace('===BEGIN===', '===BEGIN===\\n' + email_content).replace('===END===', '\\n===END===')
+
+# Convert the entire email content to HTML
+announcement_content_html = markdown.markdown(announcement_content)
 
 # Create email
 msg = MIMEMultipart()
@@ -101,14 +103,14 @@ server.quit()
                     {'name': 'Checkout repository', 'uses': 'actions/checkout@v2'},
                     {'name': 'Set up Python', 'uses': 'actions/setup-python@v2', 'with': {'python-version': '3.x'}},
                     {'name': 'Install dependencies', 'run': 'pip install pandas markdown'},
-                    {'name': 'Run email script', 'run': f'python scripts/send_email_{event_name.replace(" ", "_")}.py', 'env': {'GMAIL_PASSWORD': "${{ secrets.GMAIL_PASSWORD }}"}}
+                    {'name': 'Run email script', 'run': f'python scripts/send_email_{event_name.replace(" ", "_")}.py'}
                 ]
             }
         }
     }
 
     with open(f'.github/workflows/reminder_{event_name.replace(" ", "_")}.yml', 'w') as file:
-        yaml.dump(action_script, file, sort_keys=False)
+        yaml.dump(action_script, file)
 
 # Process each event
 for _, row in events_df.iterrows():
