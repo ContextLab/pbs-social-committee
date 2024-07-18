@@ -1,0 +1,44 @@
+name: Reminder for Weekly Wednesday Woccoms
+'on':
+  workflow_dispatch: {}
+  schedule:
+  - cron: '2024-09-24T14:00:00Z'
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Send email
+      run: "python - <<EOF\n\nimport smtplib\nfrom email.mime.multipart import MIMEMultipart\n\
+        from email.mime.text import MIMEText\n\nsender_email = \"jeremy.manning@gmail.com\"\
+        \nreceiver_email = \"jeremy.manning+admin@gmail.com\"\ncc_email = \"jeremy@dartmouth.edu,\
+        \ jeremy.r.manning@dartmouth.edu\"\nsubject = \"Weekly Wednesday Woccoms Reminder\"\
+        \n\nmsg = MIMEMultipart(\"alternative\")\nmsg['From'] = sender_email\nmsg['To']\
+        \ = receiver_email\nmsg['Cc'] = cc_email\nmsg['Subject'] = subject\n\ntext\
+        \ = \"\"\"Hi Michelle,\n\nCould you please send out the announcement below\
+        \ to the department?\n\nThanks very much!\n\nBest,\nThe PBS Social Committee\n\
+        \n===BEGIN===\nPBS Social Committee Calendar of Events\n\nWeekly Wednesday\
+        \ Woccoms \U0001F6B6\U0001F332\U0001F333\n\nThat computer screen can wait!\
+        \  Step away from your desk and join us for a walk around Occom Pond. Extend\
+        \ your lab meeting, problem-solve, or simply enjoy the fresh air with colleagues.\n\
+        \n**Date:** Wednesdays throughout the term\n**Time:** 2:30 \u2013 3:30 PM\n\
+        **Location:** Meet in Moore lobby then walk around Occom Pond\n\nLooking forward\
+        \ to walking with you!\n\nBest,\nThe PBS Social Committee\n\n\n===END===\n\
+        \"\"\"\nhtml = \"\"\"<html><body><p>PBS Social Committee Calendar of Events</p>\n\
+        <p>Weekly Wednesday Woccoms \U0001F6B6\U0001F332\U0001F333</p>\n<p>That computer\
+        \ screen can wait!  Step away from your desk and join us for a walk around\
+        \ Occom Pond. Extend your lab meeting, problem-solve, or simply enjoy the\
+        \ fresh air with colleagues.</p>\n<p><strong>Date:</strong> Wednesdays throughout\
+        \ the term\n<strong>Time:</strong> 2:30 \u2013 3:30 PM\n<strong>Location:</strong>\
+        \ Meet in Moore lobby then walk around Occom Pond</p>\n<p>Looking forward\
+        \ to walking with you!</p>\n<p>Best,\nThe PBS Social Committee</p></body></html>\"\
+        \"\"\n\npart1 = MIMEText(text, \"plain\")\npart2 = MIMEText(html, \"html\"\
+        )\n\nmsg.attach(part1)\nmsg.attach(part2)\n\nserver = smtplib.SMTP('smtp.gmail.com',\
+        \ 587)\nserver.starttls()\nserver.login(sender_email, \"${ secrets.GMAIL_PASSWORD\
+        \ }\")\ntext = msg.as_string()\nserver.sendmail(sender_email, receiver_email.split(\"\
+        , \") + cc_email.split(\", \"), text)\nserver.quit()\n\nEOF"

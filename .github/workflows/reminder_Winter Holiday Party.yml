@@ -1,0 +1,40 @@
+name: Reminder for Winter Holiday Party
+'on':
+  workflow_dispatch: {}
+  schedule:
+  - cron: '2024-12-14T14:00:00Z'
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Send email
+      run: "python - <<EOF\n\nimport smtplib\nfrom email.mime.multipart import MIMEMultipart\n\
+        from email.mime.text import MIMEText\n\nsender_email = \"jeremy.manning@gmail.com\"\
+        \nreceiver_email = \"jeremy.manning+admin@gmail.com\"\ncc_email = \"jeremy@dartmouth.edu,\
+        \ jeremy.r.manning@dartmouth.edu\"\nsubject = \"Winter Holiday Party Reminder\"\
+        \n\nmsg = MIMEMultipart(\"alternative\")\nmsg['From'] = sender_email\nmsg['To']\
+        \ = receiver_email\nmsg['Cc'] = cc_email\nmsg['Subject'] = subject\n\ntext\
+        \ = \"\"\"Hi Michelle,\n\nCould you please send out the announcement below\
+        \ to the department?\n\nThanks very much!\n\nBest,\nThe PBS Social Committee\n\
+        \n===BEGIN===\nPBS Social Committee Calendar of Events\n\nWinter Holiday Party\
+        \ \U0001F389\u2744\uFE0F\u26C4\U0001F939\n\nJoin us for our Winter Holiday\
+        \ Party! Celebrate the season with colleagues, friends, and family.\n\n**Date:**\
+        \ Mid-December\n**Time:** TBD\n**Location:** TBD\n\nLet's spread some holiday\
+        \ cheer!\n\nBest,\nThe PBS Social Committee\n\n\n===END===\n\"\"\"\nhtml =\
+        \ \"\"\"<html><body><p>PBS Social Committee Calendar of Events</p>\n<p>Winter\
+        \ Holiday Party \U0001F389\u2744\uFE0F\u26C4\U0001F939</p>\n<p>Join us for\
+        \ our Winter Holiday Party! Celebrate the season with colleagues, friends,\
+        \ and family.</p>\n<p><strong>Date:</strong> Mid-December\n<strong>Time:</strong>\
+        \ TBD\n<strong>Location:</strong> TBD</p>\n<p>Let's spread some holiday cheer!</p>\n\
+        <p>Best,\nThe PBS Social Committee</p></body></html>\"\"\"\n\npart1 = MIMEText(text,\
+        \ \"plain\")\npart2 = MIMEText(html, \"html\")\n\nmsg.attach(part1)\nmsg.attach(part2)\n\
+        \nserver = smtplib.SMTP('smtp.gmail.com', 587)\nserver.starttls()\nserver.login(sender_email,\
+        \ \"${ secrets.GMAIL_PASSWORD }\")\ntext = msg.as_string()\nserver.sendmail(sender_email,\
+        \ receiver_email.split(\", \") + cc_email.split(\", \"), text)\nserver.quit()\n\
+        \nEOF"
