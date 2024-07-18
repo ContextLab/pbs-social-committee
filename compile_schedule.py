@@ -27,14 +27,14 @@ emoji_mapping = load_emoji_mapping('emoji_mapping.csv')
 def get_term_and_year(start_date):
     date = datetime.strptime(start_date, "%Y-%m-%d")
     year = date.year
-    if date.month in [1, 2, 3]:
-        term = "Winter"
-    elif date.month in [4, 5, 6]:
-        term = "Spring"
-    elif date.month in [7, 8, 9]:
-        term = "Summer"
-    else:
+    if date.month == 8 and date.day >= 24 or date.month in [9, 10, 11, 12] or (date.month == 12 and date.day <= 31):
         term = "Fall"
+    elif date.month in [1, 2] or (date.month == 3 and date.day <= 15):
+        term = "Winter"
+    elif date.month == 3 and date.day >= 24 or date.month in [4, 5] or (date.month == 6 and date.day <= 7):
+        term = "Spring"
+    else:
+        term = "Summer"
     return term, year
 
 def replace_emojis(text):
@@ -73,8 +73,8 @@ for _, row in events_df.iterrows():
         event_content = file.readlines()
 
     # Extract event title from the second non-whitespace line
-    event_title = next(line.strip() for line in event_content if line.strip())
-    event_title = next(line.strip() for line in event_content if line.strip())
+    non_whitespace_lines = [line.strip() for line in event_content if line.strip()]
+    event_title = non_whitespace_lines[1] if len(non_whitespace_lines) > 1 else row["Event Name"]
 
     # Remove the first line (title) and the last two non-whitespace lines
     event_content = remove_last_lines(event_content[1:], 2)
