@@ -24,8 +24,8 @@ body = """<p>Hi Michelle,</p>
 <p>Thanks very much!</p>
 <p>Best,
 The PBS Social Committee</p>
-<p>===BEGIN===
-PBS Social Committee Calendar of Events</p>
+<p>===BEGIN===</p>
+<p>PBS Social Committee Calendar of Events</p>
 <p>Pumpkin Carving 🎃👻🧟🧚🦸</p>
 <p>Get into the Halloween spirit with our Pumpkin Carving event. All materials provided. Open to all in the PBS community.</p>
 <p><strong>Date:</strong> {DATE}
