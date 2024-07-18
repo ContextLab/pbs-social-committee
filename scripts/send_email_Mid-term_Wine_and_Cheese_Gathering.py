@@ -26,8 +26,15 @@ content_file = event['Content File']
 # Email content
 with open(f'templates/{content_file}', 'r') as file:
     email_content = file.read()
-email_content = email_content.replace('{DATE}', date).replace('{TIME}', time).replace('{LOCATION}', location)
+email_content = email_content.replace('{DATE}', date + '\n').replace('{TIME}', time + '\n').replace('{LOCATION}', location)
 email_content_html = markdown.markdown(email_content)
+
+# Read admin.md template
+with open('templates/admin.md', 'r') as file:
+    admin_template = file.read()
+
+# Insert event content into admin template
+announcement_content_html = admin_template.replace('===BEGIN===', '===BEGIN===\n' + email_content_html).replace('===END===', '\n===END===')
 
 # Create email
 msg = MIMEMultipart()
@@ -36,7 +43,7 @@ msg['To'] = ', '.join(admin_emails)
 msg['Cc'] = ', '.join(organizer_emails)
 msg['Subject'] = f'Mid-term Wine and Cheese Gathering Reminder'
 
-body = f"""{email_content_html}"""
+body = f"""{announcement_content_html}"""
 msg.attach(MIMEText(body, 'html'))
 
 # Send email
