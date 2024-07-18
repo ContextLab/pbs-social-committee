@@ -4,6 +4,9 @@ from datetime import datetime, timedelta
 import os
 import markdown
 
+# Create the scripts directory if it doesn't exist
+os.makedirs('scripts', exist_ok=True)
+
 # Load events.tsv and email_addresses.csv
 events_df = pd.read_csv('events.tsv', delimiter='\t')
 emails_df = pd.read_csv('email_addresses.csv')
@@ -29,7 +32,7 @@ def create_event_script(event_name, date_str, content_file, frequency, day_of_we
     with open(f'templates/{content_file}', 'r') as file:
         email_content = file.read()
 
-    email_content = email_content.replace('{{DATE}}', date + '\n\n').replace('{{TIME}}', time + '\n\n').replace('{{LOCATION}}', location)
+    email_content = email_content.replace('{{DATE}}', date + '\n').replace('{{TIME}}', time + '\n').replace('{{LOCATION}}', location)
 
     # Insert event content into admin template
     full_content = admin_template.replace('===BEGIN===', '===BEGIN===\n' + email_content).replace('===END===', '\n===END===')
@@ -73,7 +76,9 @@ server.sendmail(sender_email, admin_emails + organizer_emails, text)
 server.quit()
 """
 
-    with open(f'scripts/send_email_{event_name.replace(" ", "_")}.py', 'w') as file:
+    script_path = f'scripts/send_email_{event_name.replace(" ", "_")}.py'
+    print(f"Creating script at {script_path}")
+    with open(script_path, 'w') as file:
         file.write(script_content)
 
 # Generate scripts for each event
