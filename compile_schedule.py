@@ -3,6 +3,7 @@ import subprocess
 import os
 from datetime import datetime
 import re
+from emoji_mapping import emoji_mapping  # Import the emoji mapping
 
 # Determine the term and year
 def get_term_and_year(start_date):
@@ -17,22 +18,6 @@ def get_term_and_year(start_date):
     else:
         term = "Fall"
     return term, year
-
-# Emoji mapping
-emoji_mapping = {
-    "🍷": "wine-glass",
-    "🧀": "cheese-wedge",
-    "🚶": "walking",
-    "🌲": "evergreen-tree",
-    "🌳": "deciduous-tree",
-    "🍵": "tea",
-    "🍪": "cookie",
-    "🥯": "bagel",
-    "☕️": "coffee",
-    "🎉": "tada",
-    "🎃": "jack-o-lantern",
-    "🎲": "game-die"
-}
 
 def replace_emojis(text):
     def replace(match):
