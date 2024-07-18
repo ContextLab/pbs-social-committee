@@ -6,6 +6,7 @@ on:
 permissions:
   contents: write
   actions: write
+  workflows: write
 
 jobs:
   generate_event_reminders:
