@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import yaml
 import markdown
@@ -70,6 +71,10 @@ text = msg.as_string()
 server.sendmail(sender_email, receiver_email.split(', ') + cc_email.split(', '), text)
 server.quit()
 """
+
+    # Ensure the scripts directory exists
+    if not os.path.exists('scripts'):
+        os.makedirs('scripts')
 
     # Write the email script to a file
     with open(f'scripts/send_email_{event_name.replace(" ", "_")}.py', 'w') as file:
