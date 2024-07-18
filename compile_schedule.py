@@ -82,6 +82,10 @@ for _, row in events_df.iterrows():
 with open('events_schedule.md', 'w') as file:
     file.write(events_markdown.strip())
 
+# Set TEXINPUTS environment variable to include the latex directory
+env = os.environ.copy()
+env['TEXINPUTS'] = './/latex//:'
+
 # Convert the Markdown file to PDF using Pandoc with XeLaTeX and Poppins font
 subprocess.run([
     'pandoc', 'events_schedule.md', '-o', 'events_schedule.pdf', 
@@ -89,4 +93,4 @@ subprocess.run([
     '--include-in-header=latex_header.tex', 
     '--variable', 'geometry:margin=1in',
     '--variable', 'fontsize=12pt'
-])
+], env=env)
