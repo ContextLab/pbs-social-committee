@@ -47,14 +47,9 @@ def replace_emojis(text):
     emoji_pattern = re.compile('|'.join(re.escape(key) for key in emoji_mapping.keys()))
     return emoji_pattern.sub(replace, text)
 
-def remove_last_lines(lines, n):
-    count = 0
-    for i in range(len(lines) - 1, -1, -1):
-        if lines[i].strip() != '':
-            count += 1
-            if count == n:
-                return lines[:i]
-    return lines
+def remove_first_and_last_lines(lines, n, m):
+    non_whitespace_lines = [line for line in lines if line.strip()]
+    return non_whitespace_lines[n:-m]
 
 # Load events
 events_df = pd.read_csv('events.tsv', delimiter='\t')
@@ -76,8 +71,8 @@ for _, row in events_df.iterrows():
     non_whitespace_lines = [line.strip() for line in event_content if line.strip()]
     event_title = non_whitespace_lines[1] if len(non_whitespace_lines) > 1 else row["Event Name"]
 
-    # Remove the first line (title) and the last two non-whitespace lines
-    event_content = remove_last_lines(event_content, 2)[2:]
+    # Remove the first and last two non-whitespace lines
+    event_content = event_content = remove_first_and_last_lines(event_content, 2, 2)
 
     # Replace placeholders with actual values
     event_content = ''.join(event_content).replace('{DATE}', row['Date']).replace('{TIME}', row['Time']).replace('{LOCATION}', row['Location'])
