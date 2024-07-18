@@ -64,7 +64,7 @@ def create_event_script(event_name, date_str, content, frequency, day_of_week, d
     }
 
     # Write action script to file
-    with open(f'.github/workflows/reminder_{event_name}.yml', 'w') as file:
+    with open(f'.github/workflows/reminder_{event_name.replace(" ", "_")}.yml', 'w') as file:
         yaml.dump(action_script, file)
 
 # Process each event
