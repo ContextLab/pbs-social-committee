@@ -47,6 +47,15 @@ def replace_emojis(text):
     emoji_pattern = re.compile('|'.join(re.escape(key) for key in emoji_mapping.keys()))
     return emoji_pattern.sub(replace, text)
 
+def remove_last_lines(lines, n):
+    count = 0
+    for i in range(len(lines) - 1, -1, -1):
+        if lines[i].strip() != '':
+            count += 1
+            if count == n:
+                return lines[:i]
+    return lines
+
 # Load events
 events_df = pd.read_csv('events.tsv', delimiter='\t')
 start_date = events_df.iloc[0]['Start Date']
@@ -61,14 +70,17 @@ for _, row in events_df.iterrows():
         continue
     
     with open(f'templates/{content_file}', 'r') as file:
-        event_content = file.read()
+        event_content = file.readlines()
+
+    # Extract event title from the second non-whitespace line
+    event_title = next(line.strip() for line in event_content if line.strip())
+    event_title = next(line.strip() for line in event_content if line.strip())
+
+    # Remove the first line (title) and the last two non-whitespace lines
+    event_content = remove_last_lines(event_content[1:], 2)
 
     # Replace placeholders with actual values
-    event_content = event_content.replace('{DATE}', row['Date']).replace('{TIME}', row['Time']).replace('{LOCATION}', row['Location'])
-    
-    # Remove the first and last lines (last two lines specifically)
-    event_content_lines = event_content.split('\n')
-    event_content = '\n'.join(event_content_lines[1:-3]).strip()
+    event_content = ''.join(event_content).replace('{DATE}', row['Date']).replace('{TIME}', row['Time']).replace('{LOCATION}', row['Location'])
     
     # Adjust formatting for Date, Time, Location
     event_content = event_content.replace('**Date:**', '\n**Date:**')
@@ -78,7 +90,7 @@ for _, row in events_df.iterrows():
     # Replace emojis
     event_content = replace_emojis(event_content)
     
-    events_markdown += f"## {row['Event Name']}\n\n"
+    events_markdown += f"## {event_title}\n\n"
     events_markdown += event_content + "\n\n"
     events_markdown += "---\n\n"
 
