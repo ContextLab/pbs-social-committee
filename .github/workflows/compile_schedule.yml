@@ -21,7 +21,7 @@ jobs:
 
       - name: Compile Schedule
         env:
-          TEXINPUTS: .//latex//:
+          TEXINPUTS: .//latex//
         run: python compile_schedule.py
 
       - name: Upload Schedule PDF
