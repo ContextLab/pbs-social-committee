@@ -3,7 +3,22 @@ import subprocess
 import os
 from datetime import datetime
 import re
-from emoji_mapping import emoji_mapping  # Import the emoji mapping
+import csv
+
+# Function to load emoji mapping from CSV
+def load_emoji_mapping(csv_file):
+    emoji_mapping = {}
+    with open(csv_file, 'r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            # Handle multiple unicode codes by splitting them
+            emoji_codes = row['Emoji'].split()
+            for code in emoji_codes:
+                emoji_mapping[code] = row['Name']
+    return emoji_mapping
+
+# Load emoji mapping
+emoji_mapping = load_emoji_mapping('emoji_mapping.csv')
 
 # Determine the term and year
 def get_term_and_year(start_date):
