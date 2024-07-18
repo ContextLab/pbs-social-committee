@@ -3,6 +3,10 @@ name: Launch Events
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  workflows: write
+
 jobs:
   generate_event_reminders:
     runs-on: ubuntu-latest
