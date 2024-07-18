@@ -1,6 +1,6 @@
 PBS Social Committee Calendar of Events
 
-Hike to Gile Mountain
+Hike to Gile Mountain 🌲⛰️🌲🌲
 
 Enjoy a beautiful hike to Gile Mountain with the PBS community. It's a great way to enjoy the outdoors and connect with colleagues.
 
