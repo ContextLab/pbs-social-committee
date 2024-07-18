@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import os
 import markdown
 
-# Load events.csv and email_addresses.csv
+# Load events.tsv and email_addresses.csv
 events_df = pd.read_csv('events.tsv', delimiter='\t')
 emails_df = pd.read_csv('email_addresses.csv')
 
@@ -20,19 +20,16 @@ organizer_emails_str = ', '.join(organizer_emails)
 with open('templates/admin.md', 'r') as file:
     admin_template = file.read()
 
-# Load the email content templates
-event_templates = {}
-for event_name in events_df['Event Name']:
-    with open(f'templates/{event_name.replace(" ", "_")}.md', 'r') as file:
-        event_templates[event_name] = file.read()
-
 # Function to create event reminder scripts
 def create_event_script(event_name, date_str, content_file, frequency, day_of_week, date, time, location):
     event_date = datetime.strptime(date_str, '%Y-%m-%d')
     trigger_time = (event_date - timedelta(days=1)).strftime('%Y-%m-%dT14:00:00Z') # 9 AM ET is 14:00 UTC
 
     # Email content
-    email_content = event_templates[event_name].replace('{{DATE}}', date + '\n').replace('{{TIME}}', time + '\n').replace('{{LOCATION}}', location)
+    with open(f'templates/{content_file}', 'r') as file:
+        email_content = file.read()
+
+    email_content = email_content.replace('{{DATE}}', date + '\n').replace('{{TIME}}', time + '\n').replace('{{LOCATION}}', location)
 
     # Insert event content into admin template
     full_content = admin_template.replace('===BEGIN===', '===BEGIN===\n' + email_content).replace('===END===', '\n===END===')
