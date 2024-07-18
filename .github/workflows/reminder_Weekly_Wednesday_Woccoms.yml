@@ -14,6 +14,6 @@ jobs:
       with:
         python-version: 3.x
     - name: Install dependencies
-      run: pip install markdown
+      run: pip install pandas markdown
     - name: Run email script
       run: python scripts/send_email_Weekly_Wednesday_Woccoms.py
