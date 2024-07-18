@@ -1,10 +1,9 @@
 import pandas as pd
 import yaml
-from datetime import datetime, timedelta
-import os
 import markdown
+from datetime import datetime, timedelta
 
-# Load events and email addresses
+# Load TSV files
 events_df = pd.read_csv('events.tsv', delimiter='\t')
 emails_df = pd.read_csv('email_addresses.csv')
 
@@ -15,10 +14,17 @@ organizer_emails = emails_df[emails_df['Role'] == 'Organizer']['Email address'].
 admin_emails_str = ', '.join(admin_emails)
 organizer_emails_str = ', '.join(organizer_emails)
 
+# Function to create valid cron expressions
+def get_cron_expression(event_date):
+    dt = datetime.strptime(event_date, '%Y-%m-%d')
+    # Set the cron job to run at 9 AM UTC the day before the event
+    cron_expression = f"0 9 {dt.day - 1} {dt.month} *"
+    return cron_expression
+
 # Function to create event reminder scripts
 def create_event_script(event_name, date_str, content, frequency, day_of_week, date, time, location):
     event_date = datetime.strptime(date_str, '%Y-%m-%d')
-    trigger_time = (event_date - timedelta(days=1)).strftime('%Y-%m-%dT14:00:00Z') # 9 AM ET is 14:00 UTC
+    trigger_time = get_cron_expression(date_str)
 
     # Email content
     with open(f'templates/{content}', 'r') as file:
@@ -35,10 +41,10 @@ def create_event_script(event_name, date_str, content, frequency, day_of_week, d
     announcement_content = admin_template.replace('===BEGIN===', '===BEGIN===\n' + email_content).replace('===END===', '\n===END===')
 
     # Convert markdown to HTML
-    html_content = markdown.markdown(email_content)
+    announcement_content_html = markdown.markdown(announcement_content)
 
-    # Email script with HTML content
-    email_script = f"""
+    # Email script template
+    email_script_template = f"""
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -48,26 +54,20 @@ receiver_email = "{admin_emails_str}"
 cc_email = "{organizer_emails_str}"
 subject = "{event_name} Reminder"
 
-msg = MIMEMultipart("alternative")
+msg = MIMEMultipart()
 msg['From'] = sender_email
 msg['To'] = receiver_email
 msg['Cc'] = cc_email
 msg['Subject'] = subject
 
-text = \"\"\"{announcement_content}\"\"\"
-html = \"\"\"<html><body>{html_content}</body></html>\"\"\"
-
-part1 = MIMEText(text, "plain")
-part2 = MIMEText(html, "html")
-
-msg.attach(part1)
-msg.attach(part2)
+body = """\"{announcement_content_html}"""\".strip()
+msg.attach(MIMEText(body, 'html'))
 
 server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
 server.login(sender_email, "${{ secrets.GMAIL_PASSWORD }}")
 text = msg.as_string()
-server.sendmail(sender_email, receiver_email.split(", ") + cc_email.split(", "), text)
+server.sendmail(sender_email, receiver_email.split(', ') + cc_email.split(', '), text)
 server.quit()
 """
 
@@ -86,14 +86,15 @@ server.quit()
                 'steps': [
                     {'name': 'Checkout repository', 'uses': 'actions/checkout@v2'},
                     {'name': 'Set up Python', 'uses': 'actions/setup-python@v2', 'with': {'python-version': '3.x'}},
-                    {'name': 'Send email', 'run': f'python - <<EOF\n{email_script}\nEOF'}
+                    {'name': 'Install dependencies', 'run': 'pip install markdown'},
+                    {'name': 'Send email', 'run': f'python - <<EOF\n{email_script_template}\nEOF'}
                 ]
             }
         }
     }
 
     # Write action script to file
-    with open(f'.github/workflows/reminder_{event_name}.yml', 'w') as file:
+    with open(f'.github/workflows/reminder_{event_name.replace(" ", "_")}.yml', 'w') as file:
         yaml.dump(action_script, file, sort_keys=False)
 
 # Process each event
