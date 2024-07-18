@@ -1,4 +1,4 @@
-# One-stop Automation for the PBS Social Committee!
+# 🤖 One-stop Automation for the PBS Social Committee! 🤖
 Credit: [ChatGPT](https://chatgpt.com/)!
 
 Isn't being "social" annoying? With this repository, *you can automate away the annoyances*!
@@ -28,14 +28,13 @@ Welcome to the ultimate automation hub for the PBS Social Committee! Say goodbye
 
 ## 🛠️ Setup
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/yourusername/pbs-social-committee-automation.git
-   cd pbs-social-committee-automation
-   ```
+1. **Fork the Repository**:
+   - Press the "Fork" button in the upper right and follow the instructions (just do this once)
+   - Navigate to your fork (`https://github.com/username/pbs-social-committee`)
+   - Press the "Sync fork" button to make sure you're up to date with the source repository!
 
 2. **Add GitHub Secrets**:
-   - Navigate to your repository on GitHub.
+   - Navigate to your forked repository on GitHub.
    - Go to **Settings** > **Secrets** > **Actions**.
    - Add a new secret with the name `GMAIL_PASSWORD` and the value of your Gmail password.
 
@@ -68,6 +67,7 @@ Trigger the `compile_schedule.yml` workflow to generate the event schedule PDF.
 1. Go to the **Actions** tab in your GitHub repository.
 2. Select **Compile Schedule** workflow.
 3. Click **Run workflow**.
+4. When it's done, view the updated schedule [here](https://github.com/ContextLab/pbs-social-committee/blob/main/events_schedule.pdf)!
 
 ## 💡 Example
 
@@ -152,10 +152,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🎉 Acknowledgments
 
-Special thanks to all the committee members for their support and contributions.
-
----
-
-🤖 Enjoy your newfound automation freedom! 🤖
-
-PBS Social Committee Automation Team
+Special thanks to all of the PBS Social Committee members for their feedback and contributions!
