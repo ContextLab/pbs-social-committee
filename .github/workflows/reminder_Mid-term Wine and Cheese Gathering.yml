@@ -1,0 +1,35 @@
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Install dependencies
+      run: pip install smtplib email
+    - name: Send email
+      run: "python - <<EOF\nimport smtplib\nfrom email.mime.multipart import MIMEMultipart\n\
+        from email.mime.text import MIMEText\n\nsender_email = \"jeremy.manning@gmail.com\"\
+        \nreceiver_email = \"jeremy.manning+admin@gmail.com\"\ncc_email = \"jeremy@dartmouth.edu,\
+        \ jeremy.r.manning@dartmouth.edu\"\nsubject = \"Mid-term Wine and Cheese Gathering\
+        \ Reminder\"\n\nmsg = MIMEMultipart()\nmsg['From'] = sender_email\nmsg['To']\
+        \ = receiver_email\nmsg['Cc'] = cc_email\nmsg['Subject'] = subject\n\nbody\
+        \ = \"\"\"Hi Michelle,\n\nCould you please send out the announcement below\
+        \ to the department?\n\nThanks very much!\n\nBest,\nThe PBS Social Committee\n\
+        \n===BEGIN===\nPBS Social Committee Calendar of Events\n\nMid-term Wine and\
+        \ Cheese Gathering \U0001F377\U0001F9C0\n\nCelebrate mid-term with a relaxing\
+        \ wine and cheese gathering. Open to all in the PBS community and loved ones.\n\
+        \n**Date:** Monday, October 21\n**Time:** 4:00 \u2013 5:30 PM\n**Location:**\
+        \ Bucci Lounge, Moore Hall, 2nd floor\n\nWe look forward to your company!\n\
+        \nBest,\nThe PBS Social Committee\n\n\n===END===\n\"\"\"\nmsg.attach(MIMEText(body,\
+        \ 'plain'))\n\nserver = smtplib.SMTP('smtp.gmail.com', 587)\nserver.starttls()\n\
+        server.login(sender_email, \"eswl nrrh khqw aoex\")\ntext = msg.as_string()\n\
+        server.sendmail(sender_email, receiver_email.split(\", \") + cc_email.split(\"\
+        , \"), text)\nserver.quit()\n\nEOF"
+name: Reminder for Mid-term Wine and Cheese Gathering
+'on':
+  schedule:
+  - cron: '2024-10-20T14:00:00Z'
