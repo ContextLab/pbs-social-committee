@@ -43,8 +43,11 @@ jobs:
         git commit -m "Add event reminder workflows"
 
     - name: Push changes
-      run: |
-        git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}
-        git push origin HEAD:main
-      env:
-        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      uses: github-actions-x/push-to-another-repository@v1.7.0
+      with:
+        source-directory: "."
+        destination-github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        destination-repository: ${{ github.repository }}
+        user-email: 'github-actions[bot]@users.noreply.github.com'
+        user-name: 'github-actions[bot]'
+        commit-message: "Add event reminder workflows"
