@@ -89,7 +89,7 @@ env['TEXINPUTS'] = './/latex//:'
 # Convert the Markdown file to PDF using Pandoc with LuaTeX and Poppins font
 subprocess.run([
     'pandoc', 'events_schedule.md', '-o', 'events_schedule.pdf', 
-    '--pdf-engine=luatex', 
+    '--pdf-engine=lualatex', 
     '--include-in-header=latex_header.tex', 
     '--variable', 'geometry:margin=1in',
     '--variable', 'fontsize=12pt'
