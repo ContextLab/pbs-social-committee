@@ -29,10 +29,10 @@ Welcome to the ultimate automation hub for the PBS Social Committee! Say goodbye
 ## 🛠️ Setup
 
 1. **Clone the Repository**:
-   @@@bash
+   ```bash
    git clone https://github.com/yourusername/pbs-social-committee-automation.git
    cd pbs-social-committee-automation
-   @@@
+   ```
 
 2. **Add GitHub Secrets**:
    - Navigate to your repository on GitHub.
@@ -75,25 +75,25 @@ Here's a quick example to get you started:
 
 ### events.csv
 
-@@@csv
+```csv
 Event Name,Start Date,Frequency,Content File
 Monthly Meeting,2024-07-20,M,monthly_meeting.md
 Weekly Sync,2024-07-21,W-T,weekly_sync.md
 One-time Workshop,2024-07-25,O,workshop.md
-@@@
+```
 
 ### email_addresses.csv
 
-@@@csv
+```csv
 Name,Role,Email address
 John Doe,Admin,johndoe@example.com
 Jane Smith,Organizer,janesmith@example.com
 Bob Brown,Sender,bobbrown@gmail.com
-@@@
+```
 
 ### templates/admin.md
 
-@@@markdown
+```markdown
 # Upcoming Event Notification
 
 Hello Admin,
@@ -106,11 +106,11 @@ Please send out the following announcement to the department:
 
 Thank you,
 PBS Social Committee
-@@@
+```
 
 ### templates/weekly_sync.md
 
-@@@markdown
+```markdown
 # Weekly Sync
 
 ## Weekly Sync
@@ -121,11 +121,11 @@ Don't forget our weekly sync meeting happening every Tuesday at 10 AM.
 
 Cheers,
 PBS Social Committee
-@@@
+```
 
 ### templates/monthly_meeting.md
 
-@@@markdown
+```markdown
 # Monthly Meeting
 
 ## Monthly Meeting
@@ -140,7 +140,7 @@ Join us for our monthly meeting to discuss progress and plans. Looking forward t
 
 Cheers,
 PBS Social Committee
-@@@
+```
 
 ## 👩‍💻 Contributing
 
