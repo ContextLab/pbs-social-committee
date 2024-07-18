@@ -2,6 +2,7 @@ import pandas as pd
 import yaml
 from datetime import datetime, timedelta
 import os
+import markdown
 
 # Load events and email addresses
 events_df = pd.read_csv('events.tsv', delimiter='\t')
@@ -13,10 +14,6 @@ admin_emails = emails_df[emails_df['Role'] == 'Admin']['Email address'].tolist()
 organizer_emails = emails_df[emails_df['Role'] == 'Organizer']['Email address'].tolist()
 admin_emails_str = ', '.join(admin_emails)
 organizer_emails_str = ', '.join(organizer_emails)
-
-# Load email script template
-with open('templates/send_email_template.py', 'r') as file:
-    email_script_template = file.read()
 
 # Function to create event reminder scripts
 def create_event_script(event_name, date_str, content, frequency, day_of_week, date, time, location):
@@ -38,11 +35,41 @@ def create_event_script(event_name, date_str, content, frequency, day_of_week, d
     announcement_content = admin_template.replace('===BEGIN===', '===BEGIN===\n' + email_content).replace('===END===', '\n===END===')
 
     # Convert markdown to HTML
-    import markdown
     html_content = markdown.markdown(email_content)
 
-    # Replace placeholders in the email script template
-    email_script = email_script_template.replace('{sender_email}', sender_email).replace('{admin_emails_str}', admin_emails_str).replace('{organizer_emails_str}', organizer_emails_str).replace('{event_name}', event_name).replace('{announcement_content}', html_content).replace('{password}', "${{ secrets.GMAIL_PASSWORD }}")
+    # Email script with HTML content
+    email_script = f"""
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+sender_email = "{sender_email}"
+receiver_email = "{admin_emails_str}"
+cc_email = "{organizer_emails_str}"
+subject = "{event_name} Reminder"
+
+msg = MIMEMultipart("alternative")
+msg['From'] = sender_email
+msg['To'] = receiver_email
+msg['Cc'] = cc_email
+msg['Subject'] = subject
+
+text = \"\"\"{announcement_content}\"\"\"
+html = \"\"\"<html><body>{html_content}</body></html>\"\"\"
+
+part1 = MIMEText(text, "plain")
+part2 = MIMEText(html, "html")
+
+msg.attach(part1)
+msg.attach(part2)
+
+server = smtplib.SMTP('smtp.gmail.com', 587)
+server.starttls()
+server.login(sender_email, "${{ secrets.GMAIL_PASSWORD }}")
+text = msg.as_string()
+server.sendmail(sender_email, receiver_email.split(", ") + cc_email.split(", "), text)
+server.quit()
+"""
 
     # Create GitHub Action YAML
     action_script = {
