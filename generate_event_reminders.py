@@ -29,7 +29,7 @@ def create_event_script(event_name, date_str, content_file, frequency, day_of_we
     with open(f'templates/{content_file}', 'r') as file:
         email_content = file.read()
 
-    email_content = email_content.replace('{{DATE}}', date + '\n').replace('{{TIME}}', time + '\n').replace('{{LOCATION}}', location)
+    email_content = email_content.replace('{{DATE}}', date + '\n\n').replace('{{TIME}}', time + '\n\n').replace('{{LOCATION}}', location)
 
     # Insert event content into admin template
     full_content = admin_template.replace('===BEGIN===', '===BEGIN===\n' + email_content).replace('===END===', '\n===END===')
