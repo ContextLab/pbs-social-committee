@@ -4,9 +4,9 @@ from datetime import datetime, timedelta
 import os
 import markdown
 
-# Load events.tsv and email_addresses.tsv
-events_df = pd.read_csv('events.tsv', delimiter='\t')
-emails_df = pd.read_csv('email_addresses.tsv')
+# Load events.csv and email_addresses.csv
+events_df = pd.read_csv('events.csv')
+emails_df = pd.read_csv('email_addresses.csv')
 
 # Extract email addresses
 sender_email = emails_df[emails_df['Role'] == 'Sender']['Email address'].iloc[0]
@@ -46,17 +46,21 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
+import pandas as pd
 
-sender_email = "{sender_email}"
-receiver_email = "{admin_emails_str}"
-cc_email = "{organizer_emails_str}"
-subject = "{event_name} Reminder"
+# Load email addresses
+emails_df = pd.read_csv('email_addresses.csv')
+sender_email = emails_df[emails_df['Role'] == 'Sender']['Email address'].iloc[0]
+admin_emails = emails_df[emails_df['Role'] == 'Admin']['Email address'].tolist()
+organizer_emails = emails_df[emails_df['Role'] == 'Organizer']['Email address'].tolist()
+admin_emails_str = ', '.join(admin_emails)
+organizer_emails_str = ', '.join(organizer_emails)
 
 msg = MIMEMultipart()
 msg['From'] = sender_email
-msg['To'] = receiver_email
-msg['Cc'] = cc_email
-msg['Subject'] = subject
+msg['To'] = admin_emails_str
+msg['Cc'] = organizer_emails_str
+msg['Subject'] = "{event_name} Reminder"
 
 body = \"\"\"{full_content_html}\"\"\"
 msg.attach(MIMEText(body, 'html'))
@@ -65,7 +69,7 @@ server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
 server.login(sender_email, os.getenv('GMAIL_PASSWORD'))
 text = msg.as_string()
-server.sendmail(sender_email, receiver_email.split(', ') + cc_email.split(', '), text)
+server.sendmail(sender_email, admin_emails + organizer_emails, text)
 server.quit()
 """
 
