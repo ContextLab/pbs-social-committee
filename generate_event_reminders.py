@@ -1,19 +1,11 @@
 import os
 import pandas as pd
 import yaml
-import markdown
 from datetime import datetime, timedelta
 
 # Load TSV files
 events_df = pd.read_csv('events.tsv', delimiter='\t')
 emails_df = pd.read_csv('email_addresses.csv')
-
-# Filter email addresses
-sender_email = emails_df[emails_df['Role'] == 'Sender']['Email address'].iloc[0]
-admin_emails = emails_df[emails_df['Role'] == 'Admin']['Email address'].tolist()
-organizer_emails = emails_df[emails_df['Role'] == 'Organizer']['Email address'].tolist()
-admin_emails_str = ', '.join(admin_emails)
-organizer_emails_str = ', '.join(organizer_emails)
 
 # Function to create valid cron expressions
 def get_cron_expression(event_date):
@@ -27,58 +19,58 @@ def create_event_script(event_name, date_str, content, frequency, day_of_week, d
     event_date = datetime.strptime(date_str, '%Y-%m-%d')
     trigger_time = get_cron_expression(date_str)
 
-    # Email content
-    with open(f'templates/{content}', 'r') as file:
-        email_content = file.read()
-
-    # Replace placeholders with actual values
-    email_content = email_content.replace('{DATE}', date).replace('{TIME}', time).replace('{LOCATION}', location)
-
-    # Read admin.md template
-    with open('templates/admin.md', 'r') as file:
-        admin_template = file.read()
-
-    # Insert event content into admin template
-    announcement_content = admin_template.replace('===BEGIN===', '===BEGIN===\n' + email_content).replace('===END===', '\n===END===')
-
-    # Convert markdown to HTML
-    announcement_content_html = markdown.markdown(announcement_content)
-
-    # Email script template
-    email_script_template = f"""
+    # Create the event-specific script
+    script_content = f"""
+import pandas as pd
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import markdown
 
-sender_email = "{sender_email}"
-receiver_email = "{admin_emails_str}"
-cc_email = "{organizer_emails_str}"
-subject = "{event_name} Reminder"
+# Load email addresses
+emails_df = pd.read_csv('email_addresses.csv')
+sender_email = emails_df[emails_df['Role'] == 'Sender']['Email address'].iloc[0]
+admin_emails = emails_df[emails_df['Role'] == 'Admin']['Email address'].tolist()
+organizer_emails = emails_df[emails_df['Role'] == 'Organizer']['Email address'].tolist()
+admin_emails_str = ', '.join(admin_emails)
+organizer_emails_str = ', '.join(organizer_emails)
 
+# Load event details
+events_df = pd.read_csv('events.tsv', delimiter='\\t')
+event = events_df[events_df['Event Name'] == '{event_name}'].iloc[0]
+event_name = event['Event Name']
+date = event['Date']
+time = event['Time']
+location = event['Location']
+content_file = event['Content File']
+
+# Email content
+with open(f'templates/{{content_file}}', 'r') as file:
+    email_content = file.read()
+email_content = email_content.replace('{{DATE}}', date).replace('{{TIME}}', time).replace('{{LOCATION}}', location)
+email_content_html = markdown.markdown(email_content)
+
+# Create email
 msg = MIMEMultipart()
 msg['From'] = sender_email
-msg['To'] = receiver_email
-msg['Cc'] = cc_email
-msg['Subject'] = subject
+msg['To'] = ', '.join(admin_emails)
+msg['Cc'] = ', '.join(organizer_emails)
+msg['Subject'] = f'{event_name} Reminder'
 
-body = '''{announcement_content_html}'''
+body = f\"""{{email_content_html}}\"""
 msg.attach(MIMEText(body, 'html'))
 
+# Send email
 server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
 server.login(sender_email, "${{ secrets.GMAIL_PASSWORD }}")
 text = msg.as_string()
-server.sendmail(sender_email, receiver_email.split(', ') + cc_email.split(', '), text)
+server.sendmail(sender_email, admin_emails + organizer_emails, text)
 server.quit()
 """
 
-    # Ensure the scripts directory exists
-    if not os.path.exists('scripts'):
-        os.makedirs('scripts')
-
-    # Write the email script to a file
     with open(f'scripts/send_email_{event_name.replace(" ", "_")}.py', 'w') as file:
-        file.write(email_script_template)
+        file.write(script_content)
 
     # Create GitHub Action YAML
     action_script = {
@@ -95,14 +87,13 @@ server.quit()
                 'steps': [
                     {'name': 'Checkout repository', 'uses': 'actions/checkout@v2'},
                     {'name': 'Set up Python', 'uses': 'actions/setup-python@v2', 'with': {'python-version': '3.x'}},
-                    {'name': 'Install dependencies', 'run': 'pip install markdown'},
+                    {'name': 'Install dependencies', 'run': 'pip install pandas markdown'},
                     {'name': 'Run email script', 'run': f'python scripts/send_email_{event_name.replace(" ", "_")}.py'}
                 ]
             }
         }
     }
 
-    # Write action script to file
     with open(f'.github/workflows/reminder_{event_name.replace(" ", "_")}.yml', 'w') as file:
         yaml.dump(action_script, file, sort_keys=False)
 
