@@ -20,18 +20,18 @@ def get_term_and_year(start_date):
 
 # Emoji mapping
 emoji_mapping = {
-    "🍷": "wine_glass",
-    "🧀": "cheese_wedge",
+    "🍷": "wine-glass",
+    "🧀": "cheese-wedge",
     "🚶": "walking",
-    "🌲": "evergreen_tree",
-    "🌳": "deciduous_tree",
+    "🌲": "evergreen-tree",
+    "🌳": "deciduous-tree",
     "🍵": "tea",
     "🍪": "cookie",
     "🥯": "bagel",
     "☕️": "coffee",
     "🎉": "tada",
-    "🎃": "jack_o_lantern",
-    "🎲": "game_die"
+    "🎃": "jack-o-lantern",
+    "🎲": "game-die"
 }
 
 def replace_emojis(text):
