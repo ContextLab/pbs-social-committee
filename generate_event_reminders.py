@@ -36,10 +36,10 @@ def create_event_script(event_name, date_str, content_file, frequency, day_of_we
     email_content = email_content.replace('{DATE}', date).replace('{TIME}', time).replace('{LOCATION}', location)
 
     # Insert event content into admin template
-    full_content = admin_template.replace('===BEGIN===', '===BEGIN===\n' + email_content + '\n').replace('===END===', '\n===END===')
+    full_content = admin_template.replace('===BEGIN===', '===BEGIN===\n\n' + email_content + '\n\n').replace('===END===', '\n===END===')
 
     # Convert the full email content to HTML
-    full_content_html = markdown.markdown(full_content)
+    full_content_html = markdown.markdown(full_content, extensions=['nl2br'])
 
     # Write the script
     script_content = f"""
