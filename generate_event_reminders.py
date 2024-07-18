@@ -3,6 +3,10 @@ import pandas as pd
 import yaml
 from datetime import datetime, timedelta
 
+# Create the scripts directory if it doesn't exist
+if not os.path.exists('scripts'):
+    os.makedirs('scripts')
+
 # Load TSV files
 events_df = pd.read_csv('events.tsv', delimiter='\t')
 emails_df = pd.read_csv('email_addresses.csv')
