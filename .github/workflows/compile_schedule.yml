@@ -1,29 +1,34 @@
 name: Compile Schedule
-on: workflow_dispatch
+
+on:
+  workflow_dispatch:
 
 jobs:
   compile_schedule:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y pandoc texlive texlive-luatex texlive-fonts-recommended texlive-fonts-extra latex-emoji
-          python -m pip install pandas
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pandoc texlive-xetex texlive-fonts-extra texlive-luatex tex-gyre
+        python -m pip install pandas
 
-      - name: Compile Schedule
-        run: python compile_schedule.py
+    - name: Compile Schedule
+      env:
+        TEXINPUTS: .//latex//
+      run: python compile_schedule.py
 
-      - name: Upload Schedule PDF
-        uses: actions/upload-artifact@v2
-        with:
-          name: events_schedule_pdf
-          path: events_schedule.pdf
+    - name: Upload Schedule PDF
+      uses: actions/upload-artifact@v2
+      with:
+        name: events_schedule_pdf
+        path: events_schedule.pdf
