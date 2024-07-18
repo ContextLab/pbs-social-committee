@@ -1,0 +1,37 @@
+name: Reminder for Mid-term Wine and Cheese Gathering
+'on':
+  workflow_dispatch: {}
+  schedule:
+  - cron: 0 9 20 10 *
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Install dependencies
+      run: pip install markdown
+    - name: Send email
+      run: "python - <<EOF\n\nimport smtplib\nfrom email.mime.multipart import MIMEMultipart\n\
+        from email.mime.text import MIMEText\n\nsender_email = \"jeremy.manning@gmail.com\"\
+        \nreceiver_email = \"jeremy.manning+admin@gmail.com\"\ncc_email = \"jeremy@dartmouth.edu,\
+        \ jeremy.r.manning@dartmouth.edu\"\nsubject = \"Mid-term Wine and Cheese Gathering\
+        \ Reminder\"\n\nmsg = MIMEMultipart()\nmsg['From'] = sender_email\nmsg['To']\
+        \ = receiver_email\nmsg['Cc'] = cc_email\nmsg['Subject'] = subject\n\nbody\
+        \ = \"\"\"<p>Hi Michelle,</p>\n<p>Could you please send out the announcement\
+        \ below to the department?</p>\n<p>Thanks very much!</p>\n<p>Best,\nThe PBS\
+        \ Social Committee</p>\n<p>===BEGIN===\nPBS Social Committee Calendar of Events</p>\n\
+        <p>Mid-term Wine and Cheese Gathering \U0001F377\U0001F9C0</p>\n<p>Celebrate\
+        \ mid-term with a relaxing wine and cheese gathering. Open to all in the PBS\
+        \ community and loved ones.</p>\n<p><strong>Date:</strong> Monday, October\
+        \ 21\n<strong>Time:</strong> 4:00 \u2013 5:30 PM\n<strong>Location:</strong>\
+        \ Bucci Lounge, Moore Hall, 2nd floor</p>\n<p>We look forward to your company!</p>\n\
+        <p>Best,\nThe PBS Social Committee</p>\n<p>===END===</p>\"\"\"\nmsg.attach(MIMEText(body,\
+        \ 'html'))\n\nserver = smtplib.SMTP('smtp.gmail.com', 587)\nserver.starttls()\n\
+        server.login(sender_email, \"${ secrets.GMAIL_PASSWORD }\")\ntext = msg.as_string()\n\
+        server.sendmail(sender_email, receiver_email.split(', ') + cc_email.split(',\
+        \ '), text)\nserver.quit()\n\nEOF"
