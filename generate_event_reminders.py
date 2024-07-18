@@ -81,6 +81,36 @@ server.quit()
     with open(script_path, 'w') as file:
         file.write(script_content)
 
+    # Generate appropriate cron time
+    cron_time = f'{event_date.minute} {event_date.hour} {event_date.day} {event_date.month} *'
+
+    # Create the workflow for the event
+    workflow_content = {
+        'name': f'Reminder for {event_name}',
+        'on': {
+            'workflow_dispatch': {},
+            'schedule': [
+                {'cron': cron_time}  # Set the cron time
+            ]
+        },
+        'jobs': {
+            'send_email': {
+                'runs-on': 'ubuntu-latest',
+                'steps': [
+                    {'name': 'Checkout repository', 'uses': 'actions/checkout@v2'},
+                    {'name': 'Set up Python', 'uses': 'actions/setup-python@v2', 'with': {'python-version': '3.x'}},
+                    {'name': 'Install dependencies', 'run': 'pip install pandas markdown'},
+                    {'name': 'Run email script', 'run': f'python scripts/send_email_{event_name.replace(" ", "_")}.py', 'env': {'GMAIL_PASSWORD': '${{ secrets.GMAIL_PASSWORD }}'}}
+                ]
+            }
+        }
+    }
+
+    workflow_path = f'.github/workflows/reminder_{event_name.replace(" ", "_")}.yml'
+    print(f"Creating workflow at {workflow_path}")
+    with open(workflow_path, 'w') as file:
+        yaml.dump(workflow_content, file)
+
 # Generate scripts for each event
 for _, row in events_df.iterrows():
     event_name = row['Event Name']
