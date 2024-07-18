@@ -111,9 +111,9 @@ PBS Social Committee
 ### templates/weekly_sync.md
 
 ```markdown
-# Weekly Sync
+Event Calendar
 
-## Weekly Sync
+Weekly Sync Meeting 🧑‍💼🤝🧑‍💼
 
 Hey team,
 
@@ -126,9 +126,9 @@ PBS Social Committee
 ### templates/monthly_meeting.md
 
 ```markdown
-# Monthly Meeting
+Event Calendar
 
-## Monthly Meeting
+Monthly Meeting 📆
 
 Hey team,
 
