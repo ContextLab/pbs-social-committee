@@ -26,10 +26,10 @@ jobs:
         \ Bucci Lounge, Moore Hall, 2nd floor\n\nSee you there!\n\nBest,\nThe PBS\
         \ Social Committee\n\n\n===END===\n\"\"\"\nmsg.attach(MIMEText(body, 'plain'))\n\
         \nserver = smtplib.SMTP('smtp.gmail.com', 587)\nserver.starttls()\nserver.login(sender_email,\
-        \ \"eswl nrrh khqw aoex\")\ntext = msg.as_string()\nserver.sendmail(sender_email,\
+        \ \"${{ secrets.GMAIL_PASSWORD }}\")\ntext = msg.as_string()\nserver.sendmail(sender_email,\
         \ receiver_email.split(\", \") + cc_email.split(\", \"), text)\nserver.quit()\n\
         \nEOF"
 name: Reminder for Weekly Bagel Brunch
 'on':
   schedule:
-  - cron: '2024-09-26T14:00:00Z'
+  - cron: 0 0 26 9 *

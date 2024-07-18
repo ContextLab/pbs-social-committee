@@ -25,10 +25,10 @@ jobs:
         **Location:** TBD\n\nLooking forward to a fun night!\n\nBest,\nThe PBS Social\
         \ Committee\n\n\n===END===\n\"\"\"\nmsg.attach(MIMEText(body, 'plain'))\n\n\
         server = smtplib.SMTP('smtp.gmail.com', 587)\nserver.starttls()\nserver.login(sender_email,\
-        \ \"eswl nrrh khqw aoex\")\ntext = msg.as_string()\nserver.sendmail(sender_email,\
+        \ \"${{ secrets.GMAIL_PASSWORD }}\")\ntext = msg.as_string()\nserver.sendmail(sender_email,\
         \ receiver_email.split(\", \") + cc_email.split(\", \"), text)\nserver.quit()\n\
         \nEOF"
 name: Reminder for Game Night
 'on':
   schedule:
-  - cron: '2024-11-05T14:00:00Z'
+  - cron: 0 0 5 11 *
