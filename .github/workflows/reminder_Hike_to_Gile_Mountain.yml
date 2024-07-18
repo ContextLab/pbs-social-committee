@@ -1,0 +1,21 @@
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Install dependencies
+      run: pip install pandas markdown
+    - env:
+        GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+      name: Run email script
+      run: python scripts/send_email_Hike_to_Gile_Mountain.py
+name: Reminder for Hike to Gile Mountain
+'on':
+  schedule:
+  - cron: 0 0 21 9 *
+  workflow_dispatch: {}
