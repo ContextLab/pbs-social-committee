@@ -77,7 +77,7 @@ for _, row in events_df.iterrows():
     event_title = non_whitespace_lines[1] if len(non_whitespace_lines) > 1 else row["Event Name"]
 
     # Remove the first line (title) and the last two non-whitespace lines
-    event_content = remove_last_lines(event_content, 2)[1:]
+    event_content = remove_last_lines(event_content, 2)[2:]
 
     # Replace placeholders with actual values
     event_content = ''.join(event_content).replace('{DATE}', row['Date']).replace('{TIME}', row['Time']).replace('{LOCATION}', row['Location'])
