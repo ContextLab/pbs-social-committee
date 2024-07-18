@@ -1,4 +1,4 @@
-# 🤖 One-stop Automation for the PBS Social Committee! 🤖
+# 🤖 One-stop Automation for the PBS Social Committee!
 Credit: [ChatGPT](https://chatgpt.com/)!
 
 Isn't being "social" annoying? With this repository, *you can automate away the annoyances*!
