@@ -4,6 +4,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import markdown
+import os
 
 # Load email addresses
 emails_df = pd.read_csv('email_addresses.csv')
@@ -41,7 +42,7 @@ msg.attach(MIMEText(body, 'html'))
 # Send email
 server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
-server.login(sender_email, "${ secrets.GMAIL_PASSWORD }")
+server.login(sender_email, os.getenv("GMAIL_PASSWORD"))
 text = msg.as_string()
 server.sendmail(sender_email, admin_emails + organizer_emails, text)
 server.quit()

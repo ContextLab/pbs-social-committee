@@ -17,3 +17,5 @@ jobs:
       run: pip install pandas markdown
     - name: Run email script
       run: python scripts/send_email_Hikes_with_The_Chair.py
+      env:
+        GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
