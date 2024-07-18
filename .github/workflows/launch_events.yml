@@ -50,6 +50,7 @@ jobs:
 
     - name: Push changes
       run: |
+        gh auth setup-git
         git push origin HEAD:main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
