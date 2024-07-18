@@ -22,17 +22,17 @@ msg['Subject'] = "Weekly Wednesday Woccoms Reminder"
 body = """<p>Hi Michelle,</p>
 <p>Could you please send out the announcement below to the department?</p>
 <p>Thanks very much!</p>
-<p>Best,
+<p>Best,<br />
 The PBS Social Committee</p>
-<p>===BEGIN===
-PBS Social Committee Calendar of Events</p>
+<p>===BEGIN===</p>
+<p>PBS Social Committee Calendar of Events</p>
 <p>Weekly Wednesday Woccoms 🚶🌲🌳</p>
 <p>That computer screen can wait!  Step away from your desk and join us for a walk around Occom Pond. Extend your lab meeting, problem-solve, or simply enjoy the fresh air with colleagues.</p>
-<p><strong>Date:</strong> Wednesdays throughout the term
-<strong>Time:</strong> 2:30 – 3:30 PM
+<p><strong>Date:</strong> Wednesdays throughout the term<br />
+<strong>Time:</strong> 2:30 – 3:30 PM<br />
 <strong>Location:</strong> Meet in Moore lobby then walk around Occom Pond</p>
 <p>Looking forward to walking with you!</p>
-<p>Best,
+<p>Best,<br />
 The PBS Social Committee</p>
 <p>===END===</p>"""
 msg.attach(MIMEText(body, 'html'))

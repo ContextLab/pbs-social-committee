@@ -22,17 +22,17 @@ msg['Subject'] = "Mid-term Wine and Cheese Gathering Reminder"
 body = """<p>Hi Michelle,</p>
 <p>Could you please send out the announcement below to the department?</p>
 <p>Thanks very much!</p>
-<p>Best,
+<p>Best,<br />
 The PBS Social Committee</p>
-<p>===BEGIN===
-PBS Social Committee Calendar of Events</p>
+<p>===BEGIN===</p>
+<p>PBS Social Committee Calendar of Events</p>
 <p>Mid-term Wine and Cheese Gathering 🍷🧀</p>
 <p>Celebrate mid-term with a relaxing wine and cheese gathering. Open to all in the PBS community and loved ones.</p>
-<p><strong>Date:</strong> Monday, October 21
-<strong>Time:</strong> 4:00 – 5:30 PM
+<p><strong>Date:</strong> Monday, October 21<br />
+<strong>Time:</strong> 4:00 – 5:30 PM<br />
 <strong>Location:</strong> Bucci Lounge, Moore Hall, 2nd floor</p>
 <p>We look forward to your company!</p>
-<p>Best,
+<p>Best,<br />
 The PBS Social Committee</p>
 <p>===END===</p>"""
 msg.attach(MIMEText(body, 'html'))

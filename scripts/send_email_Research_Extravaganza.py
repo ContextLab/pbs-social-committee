@@ -22,17 +22,17 @@ msg['Subject'] = "Research Extravaganza Reminder"
 body = """<p>Hi Michelle,</p>
 <p>Could you please send out the announcement below to the department?</p>
 <p>Thanks very much!</p>
-<p>Best,
+<p>Best,<br />
 The PBS Social Committee</p>
-<p>===BEGIN===
-PBS Social Committee Calendar of Events</p>
+<p>===BEGIN===</p>
+<p>PBS Social Committee Calendar of Events</p>
 <p>Research Extravaganza 🧑‍🔬🧑‍🏫🧠🔬🥳</p>
 <p>Join us for the Research Extravaganza, an exciting kickoff to the term! Meet new folks, welcome back returning members, and enjoy introductions from the community.</p>
-<p><strong>Date:</strong> Friday, September 20
-<strong>Time:</strong> TBD
+<p><strong>Date:</strong> Friday, September 20<br />
+<strong>Time:</strong> TBD<br />
 <strong>Location:</strong> TBD</p>
 <p>We look forward to seeing you there!</p>
-<p>Best,
+<p>Best,<br />
 The PBS Social Committee</p>
 <p>===END===</p>"""
 msg.attach(MIMEText(body, 'html'))

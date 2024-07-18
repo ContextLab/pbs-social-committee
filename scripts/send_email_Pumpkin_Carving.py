@@ -22,17 +22,17 @@ msg['Subject'] = "Pumpkin Carving Reminder"
 body = """<p>Hi Michelle,</p>
 <p>Could you please send out the announcement below to the department?</p>
 <p>Thanks very much!</p>
-<p>Best,
+<p>Best,<br />
 The PBS Social Committee</p>
-<p>===BEGIN===
-PBS Social Committee Calendar of Events</p>
+<p>===BEGIN===</p>
+<p>PBS Social Committee Calendar of Events</p>
 <p>Pumpkin Carving 🎃👻🧟🧚🦸</p>
 <p>Get into the Halloween spirit with our Pumpkin Carving event. All materials provided. Open to all in the PBS community.</p>
-<p><strong>Date:</strong> Wednesday, October 30
-<strong>Time:</strong> TBD
+<p><strong>Date:</strong> Wednesday, October 30<br />
+<strong>Time:</strong> TBD<br />
 <strong>Location:</strong> TBD</p>
 <p>Let's get creative!</p>
-<p>Best,
+<p>Best,<br />
 The PBS Social Committee</p>
 <p>===END===</p>"""
 msg.attach(MIMEText(body, 'html'))

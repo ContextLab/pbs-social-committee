@@ -22,17 +22,17 @@ msg['Subject'] = "Hikes with The Chair Reminder"
 body = """<p>Hi Michelle,</p>
 <p>Could you please send out the announcement below to the department?</p>
 <p>Thanks very much!</p>
-<p>Best,
+<p>Best,<br />
 The PBS Social Committee</p>
-<p>===BEGIN===
-PBS Social Committee Calendar of Events</p>
+<p>===BEGIN===</p>
+<p>PBS Social Committee Calendar of Events</p>
 <p>Hikes with The Chair 🪑🚶🚶🚶</p>
 <p>Join us for weekend hikes with The Chair. Enjoy nature and good company as we explore local trails.</p>
-<p><strong>Date:</strong> Weekends throughout the term
-<strong>Time:</strong> TBD
+<p><strong>Date:</strong> Weekends throughout the term<br />
+<strong>Time:</strong> TBD<br />
 <strong>Location:</strong> Meet at Moore Hall then head to the trail</p>
 <p>Happy hiking!</p>
-<p>Best,
+<p>Best,<br />
 The PBS Social Committee</p>
 <p>===END===</p>"""
 msg.attach(MIMEText(body, 'html'))
