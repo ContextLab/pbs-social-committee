@@ -65,12 +65,12 @@ for _, row in events_df.iterrows():
     
     # Remove the first and last lines
     event_content_lines = event_content.split('\n')
-    event_content = '\n'.join(event_content_lines[1:-1]).strip()
+    event_content = '\n.join(event_content_lines[1:-1]).strip()
     
     # Adjust formatting for Date, Time, Location
-    event_content = event_content.replace('Date:', '\nDate:')
-    event_content = event_content.replace('Time:', '\nTime:')
-    event_content = event_content.replace('Location:', '\nLocation:')
+    event_content = event_content.replace('**Date:**', '\n**Date:**')
+    event_content = event_content.replace('**Time:**', '\n**Time:**')
+    event_content = event_content.replace('**Location:**', '\n**Location:**')
     
     # Replace emojis
     event_content = replace_emojis(event_content)
