@@ -60,7 +60,7 @@ msg['To'] = receiver_email
 msg['Cc'] = cc_email
 msg['Subject'] = subject
 
-body = \"\"\"{announcement_content_html}\"\"\"
+body = '''{announcement_content_html}'''
 msg.attach(MIMEText(body, 'html'))
 
 server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -70,6 +70,10 @@ text = msg.as_string()
 server.sendmail(sender_email, receiver_email.split(', ') + cc_email.split(', '), text)
 server.quit()
 """
+
+    # Write the email script to a file
+    with open(f'scripts/send_email_{event_name.replace(" ", "_")}.py', 'w') as file:
+        file.write(email_script_template)
 
     # Create GitHub Action YAML
     action_script = {
@@ -87,7 +91,7 @@ server.quit()
                     {'name': 'Checkout repository', 'uses': 'actions/checkout@v2'},
                     {'name': 'Set up Python', 'uses': 'actions/setup-python@v2', 'with': {'python-version': '3.x'}},
                     {'name': 'Install dependencies', 'run': 'pip install markdown'},
-                    {'name': 'Send email', 'run': f'python - <<EOF\n{email_script_template}\nEOF'}
+                    {'name': 'Run email script', 'run': f'python scripts/send_email_{event_name.replace(" ", "_")}.py'}
                 ]
             }
         }
