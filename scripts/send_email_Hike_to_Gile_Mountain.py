@@ -24,8 +24,8 @@ body = """<p>Hi Michelle,</p>
 <p>Thanks very much!</p>
 <p>Best,
 The PBS Social Committee</p>
-<p>===BEGIN===</p>
-<p>PBS Social Committee Calendar of Events</p>
+<p>===BEGIN===
+PBS Social Committee Calendar of Events</p>
 <p>Hike to Gile Mountain 🌲⛰️🌲🌲</p>
 <p>Enjoy a beautiful hike to Gile Mountain with the PBS community. It's a great way to enjoy the outdoors and connect with colleagues.</p>
 <p><strong>Date:</strong> {DATE}

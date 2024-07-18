@@ -24,8 +24,8 @@ body = """<p>Hi Michelle,</p>
 <p>Thanks very much!</p>
 <p>Best,
 The PBS Social Committee</p>
-<p>===BEGIN===</p>
-<p>PBS Social Committee Calendar of Events</p>
+<p>===BEGIN===
+PBS Social Committee Calendar of Events</p>
 <p>Weekly Wednesday Woccoms 🚶🌲🌳</p>
 <p>That computer screen can wait!  Step away from your desk and join us for a walk around Occom Pond. Extend your lab meeting, problem-solve, or simply enjoy the fresh air with colleagues.</p>
 <p><strong>Date:</strong> {DATE}

@@ -24,8 +24,8 @@ body = """<p>Hi Michelle,</p>
 <p>Thanks very much!</p>
 <p>Best,
 The PBS Social Committee</p>
-<p>===BEGIN===</p>
-<p>PBS Social Committee Calendar of Events</p>
+<p>===BEGIN===
+PBS Social Committee Calendar of Events</p>
 <p>Research Extravaganza 🧑‍🔬🧑‍🏫🧠🔬🥳</p>
 <p>Join us for the Research Extravaganza, an exciting kickoff to the term! Meet new folks, welcome back returning members, and enjoy introductions from the community.</p>
 <p><strong>Date:</strong> {DATE}

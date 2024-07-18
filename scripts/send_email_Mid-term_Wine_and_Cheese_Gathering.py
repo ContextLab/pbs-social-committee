@@ -24,8 +24,8 @@ body = """<p>Hi Michelle,</p>
 <p>Thanks very much!</p>
 <p>Best,
 The PBS Social Committee</p>
-<p>===BEGIN===</p>
-<p>PBS Social Committee Calendar of Events</p>
+<p>===BEGIN===
+PBS Social Committee Calendar of Events</p>
 <p>Mid-term Wine and Cheese Gathering 🍷🧀</p>
 <p>Celebrate mid-term with a relaxing wine and cheese gathering. Open to all in the PBS community and loved ones.</p>
 <p><strong>Date:</strong> {DATE}

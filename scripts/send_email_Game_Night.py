@@ -24,8 +24,8 @@ body = """<p>Hi Michelle,</p>
 <p>Thanks very much!</p>
 <p>Best,
 The PBS Social Committee</p>
-<p>===BEGIN===</p>
-<p>PBS Social Committee Calendar of Events</p>
+<p>===BEGIN===
+PBS Social Committee Calendar of Events</p>
 <p>Game Night 🎲</p>
 <p>Join us for a fun Game Night! Bring your favorite games and enjoy an evening of laughter and friendly competition.</p>
 <p><strong>Date:</strong> {DATE}
