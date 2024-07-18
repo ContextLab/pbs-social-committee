@@ -28,9 +28,9 @@ The PBS Social Committee</p>
 PBS Social Committee Calendar of Events</p>
 <p>Weekly Bagel Brunch 🥯☕️🍵</p>
 <p>Help yourself to a variety of bagels, cream cheese, and conversations with colleagues. Please bring your own coffee, tea, and conversation.</p>
-<p><strong>Date:</strong> {DATE}
-<strong>Time:</strong> {TIME}
-<strong>Location:</strong> {LOCATION}</p>
+<p><strong>Date:</strong> Fridays throughout the term
+<strong>Time:</strong> 10:00 – 11:00 AM
+<strong>Location:</strong> Bucci Lounge, Moore Hall, 2nd floor</p>
 <p>See you there!</p>
 <p>Best,
 The PBS Social Committee</p>

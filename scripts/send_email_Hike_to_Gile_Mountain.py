@@ -28,9 +28,9 @@ The PBS Social Committee</p>
 PBS Social Committee Calendar of Events</p>
 <p>Hike to Gile Mountain 🌲⛰️🌲🌲</p>
 <p>Enjoy a beautiful hike to Gile Mountain with the PBS community. It's a great way to enjoy the outdoors and connect with colleagues.</p>
-<p><strong>Date:</strong> {DATE}
-<strong>Time:</strong> {TIME}
-<strong>Location:</strong> {LOCATION}</p>
+<p><strong>Date:</strong> First two weeks of term
+<strong>Time:</strong> TBD
+<strong>Location:</strong> Meet at Moore Hall then carpool to Gile Mountain</p>
 <p>Happy hiking!</p>
 <p>Best,
 The PBS Social Committee</p>

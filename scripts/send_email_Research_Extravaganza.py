@@ -28,9 +28,9 @@ The PBS Social Committee</p>
 PBS Social Committee Calendar of Events</p>
 <p>Research Extravaganza 🧑‍🔬🧑‍🏫🧠🔬🥳</p>
 <p>Join us for the Research Extravaganza, an exciting kickoff to the term! Meet new folks, welcome back returning members, and enjoy introductions from the community.</p>
-<p><strong>Date:</strong> {DATE}
-<strong>Time:</strong> {TIME}
-<strong>Location:</strong> {LOCATION}</p>
+<p><strong>Date:</strong> Friday, September 20
+<strong>Time:</strong> TBD
+<strong>Location:</strong> TBD</p>
 <p>We look forward to seeing you there!</p>
 <p>Best,
 The PBS Social Committee</p>

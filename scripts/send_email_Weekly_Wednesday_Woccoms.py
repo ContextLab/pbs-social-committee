@@ -28,9 +28,9 @@ The PBS Social Committee</p>
 PBS Social Committee Calendar of Events</p>
 <p>Weekly Wednesday Woccoms 🚶🌲🌳</p>
 <p>That computer screen can wait!  Step away from your desk and join us for a walk around Occom Pond. Extend your lab meeting, problem-solve, or simply enjoy the fresh air with colleagues.</p>
-<p><strong>Date:</strong> {DATE}
-<strong>Time:</strong> {TIME}
-<strong>Location:</strong> {LOCATION}</p>
+<p><strong>Date:</strong> Wednesdays throughout the term
+<strong>Time:</strong> 2:30 – 3:30 PM
+<strong>Location:</strong> Meet in Moore lobby then walk around Occom Pond</p>
 <p>Looking forward to walking with you!</p>
 <p>Best,
 The PBS Social Committee</p>

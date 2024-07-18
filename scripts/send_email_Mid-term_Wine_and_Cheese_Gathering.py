@@ -28,9 +28,9 @@ The PBS Social Committee</p>
 PBS Social Committee Calendar of Events</p>
 <p>Mid-term Wine and Cheese Gathering 🍷🧀</p>
 <p>Celebrate mid-term with a relaxing wine and cheese gathering. Open to all in the PBS community and loved ones.</p>
-<p><strong>Date:</strong> {DATE}
-<strong>Time:</strong> {TIME}
-<strong>Location:</strong> {LOCATION}</p>
+<p><strong>Date:</strong> Monday, October 21
+<strong>Time:</strong> 4:00 – 5:30 PM
+<strong>Location:</strong> Bucci Lounge, Moore Hall, 2nd floor</p>
 <p>We look forward to your company!</p>
 <p>Best,
 The PBS Social Committee</p>

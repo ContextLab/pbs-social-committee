@@ -28,9 +28,9 @@ The PBS Social Committee</p>
 PBS Social Committee Calendar of Events</p>
 <p>Pumpkin Carving 🎃👻🧟🧚🦸</p>
 <p>Get into the Halloween spirit with our Pumpkin Carving event. All materials provided. Open to all in the PBS community.</p>
-<p><strong>Date:</strong> {DATE}
-<strong>Time:</strong> {TIME}
-<strong>Location:</strong> {LOCATION}</p>
+<p><strong>Date:</strong> Wednesday, October 30
+<strong>Time:</strong> TBD
+<strong>Location:</strong> TBD</p>
 <p>Let's get creative!</p>
 <p>Best,
 The PBS Social Committee</p>

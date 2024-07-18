@@ -28,9 +28,9 @@ The PBS Social Committee</p>
 PBS Social Committee Calendar of Events</p>
 <p>Hikes with The Chair 🪑🚶🚶🚶</p>
 <p>Join us for weekend hikes with The Chair. Enjoy nature and good company as we explore local trails.</p>
-<p><strong>Date:</strong> {DATE}
-<strong>Time:</strong> {TIME}
-<strong>Location:</strong> {LOCATION}</p>
+<p><strong>Date:</strong> Weekends throughout the term
+<strong>Time:</strong> TBD
+<strong>Location:</strong> Meet at Moore Hall then head to the trail</p>
 <p>Happy hiking!</p>
 <p>Best,
 The PBS Social Committee</p>

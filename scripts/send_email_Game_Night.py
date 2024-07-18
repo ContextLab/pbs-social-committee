@@ -28,9 +28,9 @@ The PBS Social Committee</p>
 PBS Social Committee Calendar of Events</p>
 <p>Game Night 🎲</p>
 <p>Join us for a fun Game Night! Bring your favorite games and enjoy an evening of laughter and friendly competition.</p>
-<p><strong>Date:</strong> {DATE}
-<strong>Time:</strong> {TIME}
-<strong>Location:</strong> {LOCATION}</p>
+<p><strong>Date:</strong> Wednesday, November 6
+<strong>Time:</strong> TBD
+<strong>Location:</strong> TBD</p>
 <p>Looking forward to a fun night!</p>
 <p>Best,
 The PBS Social Committee</p>

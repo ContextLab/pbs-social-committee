@@ -28,9 +28,9 @@ The PBS Social Committee</p>
 PBS Social Committee Calendar of Events</p>
 <p>Winter Holiday Party 🎉❄️⛄🤹</p>
 <p>Join us for our Winter Holiday Party! Celebrate the season with colleagues, friends, and family.</p>
-<p><strong>Date:</strong> {DATE}
-<strong>Time:</strong> {TIME}
-<strong>Location:</strong> {LOCATION}</p>
+<p><strong>Date:</strong> Mid-December
+<strong>Time:</strong> TBD
+<strong>Location:</strong> TBD</p>
 <p>Let's spread some holiday cheer!</p>
 <p>Best,
 The PBS Social Committee</p>
