@@ -11,8 +11,10 @@ jobs:
       - name: Remove event scripts
         run: |
           rm -f .github/workflows/reminder_*.yml
+          rm -f scripts/send_email_*.py
           git config --global user.email "you@example.com"
           git config --global user.name "GitHub Action"
           git add .github/workflows/
+          git add scripts/
           git commit -m "Remove event reminder scripts"
           git push
