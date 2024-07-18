@@ -28,6 +28,11 @@ jobs:
       env:
         GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
 
+    - name: Configure git
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
     - name: Commit new workflows
       run: |
         git add .github/workflows/reminder_*.yml
