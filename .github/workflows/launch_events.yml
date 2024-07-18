@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   generate_event_reminders:
@@ -43,6 +44,7 @@ jobs:
 
     - name: Push changes
       run: |
-        git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+        git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}
+        git push origin HEAD:main
       env:
         GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
