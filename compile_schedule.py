@@ -5,16 +5,19 @@ from datetime import datetime
 import re
 import csv
 
+# Function to convert unicode code points to actual emoji characters
+def unicode_to_emoji(unicode_str):
+    codes = unicode_str.split()
+    return ''.join(chr(int(code.lstrip('U+'), 16)) for code in codes)
+
 # Function to load emoji mapping from CSV
 def load_emoji_mapping(csv_file):
     emoji_mapping = {}
     with open(csv_file, 'r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         for row in reader:
-            # Handle multiple unicode codes by splitting them
-            emoji_codes = row['Emoji'].split()
-            for code in emoji_codes:
-                emoji_mapping[code] = row['Name']
+            emoji = unicode_to_emoji(row['Emoji'])
+            emoji_mapping[emoji] = row['Name']
     return emoji_mapping
 
 # Load emoji mapping
@@ -87,7 +90,7 @@ with open('events_schedule.md', 'w') as file:
 env = os.environ.copy()
 env['TEXINPUTS'] = './/latex//:'
 
-# Convert the Markdown file to PDF using Pandoc with LuaLaTeX and Poppins font
+# Convert the Markdown file to PDF using Pandoc with LuaLaTeX and Merriweather font
 subprocess.run([
     'pandoc', 'events_schedule.md', '-o', 'events_schedule.pdf', 
     '--pdf-engine=lualatex', 
