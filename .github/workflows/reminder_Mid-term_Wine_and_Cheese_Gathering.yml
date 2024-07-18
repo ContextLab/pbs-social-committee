@@ -1,8 +1,3 @@
-name: Reminder for Mid-term Wine and Cheese Gathering
-'on':
-  workflow_dispatch: {}
-  schedule:
-  - cron: 0 9 20 10 *
 jobs:
   send_email:
     runs-on: ubuntu-latest
@@ -17,5 +12,8 @@ jobs:
       run: pip install pandas markdown
     - name: Run email script
       run: python scripts/send_email_Mid-term_Wine_and_Cheese_Gathering.py
-      env:
-        GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+name: Reminder for Mid-term Wine and Cheese Gathering
+'on':
+  schedule:
+  - cron: 0 9 20 10 *
+  workflow_dispatch: {}

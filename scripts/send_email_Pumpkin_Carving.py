@@ -27,14 +27,16 @@ content_file = event['Content File']
 with open(f'templates/{content_file}', 'r') as file:
     email_content = file.read()
 email_content = email_content.replace('{DATE}', date + '\n').replace('{TIME}', time + '\n').replace('{LOCATION}', location)
-email_content_html = markdown.markdown(email_content)
 
 # Read admin.md template
 with open('templates/admin.md', 'r') as file:
     admin_template = file.read()
 
 # Insert event content into admin template
-announcement_content_html = admin_template.replace('===BEGIN===', '===BEGIN===\n' + email_content_html).replace('===END===', '\n===END===')
+announcement_content = admin_template.replace('===BEGIN===', '===BEGIN===\n' + email_content).replace('===END===', '\n===END===')
+
+# Convert the entire email content to HTML
+announcement_content_html = markdown.markdown(announcement_content)
 
 # Create email
 msg = MIMEMultipart()
