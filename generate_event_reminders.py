@@ -53,7 +53,7 @@ content_file = event['Content File']
 # Email content
 with open(f'templates/{{content_file}}', 'r') as file:
     email_content = file.read()
-email_content = email_content.replace('{{DATE}}', date).replace('{{TIME}}', time).replace('{{LOCATION}}', location)
+email_content = email_content.replace('{{DATE}}', date + '\n').replace('{{TIME}}', time + '\n').replace('{{LOCATION}}', location)
 email_content_html = markdown.markdown(email_content)
 
 # Create email
