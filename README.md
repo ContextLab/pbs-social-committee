@@ -29,10 +29,10 @@ Welcome to the ultimate automation hub for the PBS Social Committee! Say goodbye
 ## 🛠️ Setup
 
 1. **Clone the Repository**:
-   ```bash
+   @@@bash
    git clone https://github.com/yourusername/pbs-social-committee-automation.git
    cd pbs-social-committee-automation
-   ```
+   @@@
 
 2. **Add GitHub Secrets**:
    - Navigate to your repository on GitHub.
@@ -61,31 +61,39 @@ Trigger the `cancel_events.yml` workflow to stop sending event reminders.
 2. Select **Cancel Events** workflow.
 3. Click **Run workflow**.
 
+### Compile Schedule
+
+Trigger the `compile_schedule.yml` workflow to generate the event schedule PDF.
+
+1. Go to the **Actions** tab in your GitHub repository.
+2. Select **Compile Schedule** workflow.
+3. Click **Run workflow**.
+
 ## 💡 Example
 
 Here's a quick example to get you started:
 
 ### events.csv
 
-```
+@@@csv
 Event Name,Start Date,Frequency,Content File
 Monthly Meeting,2024-07-20,M,monthly_meeting.md
 Weekly Sync,2024-07-21,W-T,weekly_sync.md
 One-time Workshop,2024-07-25,O,workshop.md
-```
+@@@
 
 ### email_addresses.csv
 
-```
+@@@csv
 Name,Role,Email address
 John Doe,Admin,johndoe@example.com
 Jane Smith,Organizer,janesmith@example.com
 Bob Brown,Sender,bobbrown@gmail.com
-```
+@@@
 
 ### templates/admin.md
 
-```
+@@@markdown
 # Upcoming Event Notification
 
 Hello Admin,
@@ -98,11 +106,13 @@ Please send out the following announcement to the department:
 
 Thank you,
 PBS Social Committee
-```
+@@@
 
 ### templates/weekly_sync.md
 
-```
+@@@markdown
+# Weekly Sync
+
 ## Weekly Sync
 
 Hey team,
@@ -111,7 +121,26 @@ Don't forget our weekly sync meeting happening every Tuesday at 10 AM.
 
 Cheers,
 PBS Social Committee
-```
+@@@
+
+### templates/monthly_meeting.md
+
+@@@markdown
+# Monthly Meeting
+
+## Monthly Meeting
+
+Hey team,
+
+Join us for our monthly meeting to discuss progress and plans. Looking forward to seeing you there!
+
+**Date:** {DATE}
+**Time:** {TIME}
+**Location:** {LOCATION}
+
+Cheers,
+PBS Social Committee
+@@@
 
 ## 👩‍💻 Contributing
 
@@ -127,6 +156,6 @@ Special thanks to all the committee members for their support and contributions.
 
 ---
 
-Enjoy your newfound automation freedom!
+🤖 Enjoy your newfound automation freedom! 🤖
 
 PBS Social Committee Automation Team
